@@ -6,7 +6,7 @@ import InputField from '../components/InputField';
 import CustomText from '../components/CustomText';
 import logo from '../assets/logoTaskly.png';
 
-const LoginScreen = ({ navigation }) => { // Adicionando a props navigation
+const LoginScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image source={logo} style={styles.logo} />
@@ -17,7 +17,7 @@ const LoginScreen = ({ navigation }) => { // Adicionando a props navigation
         <InputField placeholder="Senha" secureTextEntry />
         <FilledButton
           title="Entrar"
-          onPress={() => navigation.navigate('Tasks')} // Navega para a tela Tasks
+          onPress={() => navigation.navigate('Tasks')}
         />
       </View>
 
@@ -25,7 +25,7 @@ const LoginScreen = ({ navigation }) => { // Adicionando a props navigation
         <CustomText style={styles.text}>Ainda não possui uma conta?</CustomText>
         <OutlinedButton
           title="Criar conta"
-          onPress={() => console.log('Criar conta')} // Ação do botão "Criar conta"
+          onPress={() => console.log('Criar conta')}
         />
       </View>
     </View>

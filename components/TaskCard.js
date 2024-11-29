@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Modal, FlatList } from 'react-native';
-import CustomText from './CustomText'; // Utilizando o componente CustomText
+import CustomText from './CustomText';
 
 const TaskCard = ({ task }) => {
   const [status, setStatus] = useState(task.status);
@@ -13,12 +13,12 @@ const TaskCard = ({ task }) => {
   ];
 
   const toggleStatus = () => {
-    setIsModalVisible(true); // Abre a lista de opções
+    setIsModalVisible(true);
   };
 
   const handleStatusChange = (newStatus) => {
-    setStatus(newStatus.name); // Altera o status
-    setIsModalVisible(false); // Fecha a lista
+    setStatus(newStatus.name);
+    setIsModalVisible(false);
   };
 
   return (

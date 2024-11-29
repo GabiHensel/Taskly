@@ -2,6 +2,7 @@ import React from 'react';
 import { View, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import CustomText from '../components/CustomText';
 import TaskCard from '../components/TaskCard';
+import OutlinedButton from '../components/OutlinedButton';
 
 const TasksScreen = () => {
   const tasks = [
@@ -14,7 +15,15 @@ const TasksScreen = () => {
 
   return (
     <View style={styles.container}>
-      <CustomText style={styles.title}>Tarefas</CustomText>
+      {/* Contêiner do título e do botão Perfil */}
+      <View style={styles.header}>
+        <CustomText style={styles.title}>Tarefas</CustomText>
+        <OutlinedButton
+          title="Perfil"
+          onPress={() => console.log('Navegar para o perfil')}
+          style={styles.profileButton}
+        />
+      </View>
 
       <FlatList
         data={tasks}
@@ -39,11 +48,22 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    paddingHorizontal: 10,
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#00AFFF',
-    marginBottom: 20,
+  },
+  profileButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginLeft: 10,
   },
   listContainer: {
     paddingBottom: 20,

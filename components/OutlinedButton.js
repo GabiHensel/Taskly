@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, StyleSheet } from 'react-native';
-import CustomText from './CustomText'; // Certifique-se de importar o CustomText
+import CustomText from './CustomText';
 
 const OutlinedButton = ({ title, onPress }) => {
   return (
