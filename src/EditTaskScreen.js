@@ -187,10 +187,11 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   buttonContainer: {
-    padding: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    flexDirection: 'column',
+    gap: 10,
+   },
 });
 
 export default EditTaskScreen;

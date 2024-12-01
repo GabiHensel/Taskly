@@ -8,6 +8,9 @@ import TasksScreen from './src/TasksScreen';
 import CreateTaskScreen from './src/CreateTaskScreen';
 import ViewTaskScreen from './src/ViewTaskScreen';
 import EditTaskScreen from './src/EditTaskScreen';
+import SignUpScreen from './src/SignUpScreen';
+import UserProfileScreen from './src/UserProfileScreen';
+import EditProfileScreen from './src/EditProfileScreen';
 
 const Stack = createStackNavigator();
 
@@ -36,10 +39,25 @@ export default function App() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-                name="EditTask" // Verifique se o nome corresponde
-                component={EditTaskScreen} // Certifique-se de que está passando o componente correto
+                name="EditTask"
+                component={EditTaskScreen}
                 options={{ headerShown: false }}
-              />
+             />
+            <Stack.Screen
+                name="SignUp"
+                component={SignUpScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="UserProfile"
+                component={UserProfileScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="EditProfile"
+                component={EditProfileScreen}
+                options={{ headerShown: false }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
   );

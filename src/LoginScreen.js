@@ -25,7 +25,7 @@ const LoginScreen = ({ navigation }) => {
         <CustomText style={styles.text}>Ainda não possui uma conta?</CustomText>
         <OutlinedButton
           title="Criar conta"
-          onPress={() => console.log('Criar conta')}
+          onPress={() => navigation.navigate('SignUp')}
         />
       </View>
     </View>

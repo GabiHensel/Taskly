@@ -58,12 +58,11 @@ const TasksScreen = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <CustomText style={styles.title}>Tarefas</CustomText>
-        {/* Substituir texto por ícone */}
         <TouchableOpacity
-          onPress={() => console.log('Navegar para o perfil')}
+          onPress={() => navigation.navigate('UserProfile')}
           style={styles.profileButton}
         >
-          <FontAwesome name="user" size={24} color="#00AFFF" /> {/* Ícone de usuário */}
+        <FontAwesome name="user" size={24} color="#00AFFF" />
         </TouchableOpacity>
       </View>
 

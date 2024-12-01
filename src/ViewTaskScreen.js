@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Modal, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import CustomText from '../components/CustomText';
+import { Ionicons } from '@expo/vector-icons';
 
 const ViewTaskScreen = ({ route, navigation }) => {
   const { task } = route.params;
@@ -13,15 +14,15 @@ const ViewTaskScreen = ({ route, navigation }) => {
 
   const closeDeleteModal = () => setDeleteModalVisible(false);
 
-const confirmDelete = () => {
-  Alert.alert('Tarefa excluída!', 'A tarefa foi excluída com sucesso.', [
-    {
-      text: 'OK',
-      onPress: () => navigation.navigate('Tasks')
-    },
-  ]);
-  setDeleteModalVisible(false);
-};
+  const confirmDelete = () => {
+    Alert.alert('Tarefa excluída!', 'A tarefa foi excluída com sucesso.', [
+      {
+        text: 'OK',
+        onPress: () => navigation.navigate('Tasks'),
+      },
+    ]);
+    setDeleteModalVisible(false);
+  };
 
   const showModal = () => setModalVisible(true);
 
@@ -51,11 +52,8 @@ const confirmDelete = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <CustomText style={styles.title}>Tarefa</CustomText>
-        <TouchableOpacity
-          style={styles.closeButton}
-          onPress={() => navigation.goBack()}
-        >
-          <CustomText style={styles.closeButtonText}>✕</CustomText>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="close" size={24} color="#00AFFF" />
         </TouchableOpacity>
       </View>
 
@@ -76,10 +74,10 @@ const confirmDelete = () => {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-            style={[styles.button, styles.editButton]}
-            onPress={() => navigation.navigate('EditTask', { task: task })}
-         >
-            <CustomText style={styles.buttonText}>Editar</CustomText>
+          style={[styles.button, styles.editButton]}
+          onPress={() => navigation.navigate('EditTask', { task: task })}
+        >
+          <CustomText style={styles.buttonText}>Editar</CustomText>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -120,7 +118,6 @@ const confirmDelete = () => {
             >
               <CustomText style={styles.modalButtonText}>Concluído</CustomText>
             </TouchableOpacity>
-
           </View>
         </View>
       </Modal>
@@ -137,18 +134,17 @@ const confirmDelete = () => {
 
             <TouchableOpacity
               style={[styles.modalButton, { backgroundColor: '#ccc' }]}
-              onPress={closeDeleteModal} // Cancelar exclusão
+              onPress={closeDeleteModal}
             >
               <CustomText style={styles.modalButtonText}>Cancelar</CustomText>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={[styles.modalButton, { backgroundColor: '#FF0000' }]}
-              onPress={confirmDelete} // Confirmar exclusão
+              onPress={confirmDelete}
             >
               <CustomText style={styles.modalButtonText}>Confirmar</CustomText>
             </TouchableOpacity>
-
           </View>
         </View>
       </Modal>
