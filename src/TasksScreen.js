@@ -3,6 +3,7 @@ import { View, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import CustomText from '../components/CustomText';
 import TaskCard from '../components/TaskCard';
 import OutlinedButton from '../components/OutlinedButton';
+import { FontAwesome } from '@expo/vector-icons'; // Importa o ícone
 
 const TasksScreen = ({ navigation }) => {
   const tasks = [
@@ -57,11 +58,13 @@ const TasksScreen = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <CustomText style={styles.title}>Tarefas</CustomText>
-        <OutlinedButton
-          title="Perfil"
+        {/* Substituir texto por ícone */}
+        <TouchableOpacity
           onPress={() => console.log('Navegar para o perfil')}
           style={styles.profileButton}
-        />
+        >
+          <FontAwesome name="user" size={24} color="#00AFFF" /> {/* Ícone de usuário */}
+        </TouchableOpacity>
       </View>
 
       <FlatList
@@ -100,6 +103,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     paddingVertical: 10,
+    marginTop: 20
   },
   title: {
     fontSize: 24,
@@ -130,4 +134,3 @@ const styles = StyleSheet.create({
 });
 
 export default TasksScreen;
-
