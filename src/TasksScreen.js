@@ -4,18 +4,57 @@ import CustomText from '../components/CustomText';
 import TaskCard from '../components/TaskCard';
 import OutlinedButton from '../components/OutlinedButton';
 
-const TasksScreen = () => {
+const TasksScreen = ({ navigation }) => {
   const tasks = [
-    { id: '1', title: 'Tirar o lixo', date: '01/11', responsible: 'Ana', status: 'para fazer' },
-    { id: '2', title: 'Estudar para a prova', date: '10/11', responsible: 'Gabi', status: 'concluído' },
-    { id: '3', title: 'Fazer o trabalho da faculdade', date: '25/11', responsible: 'Gabi', status: 'em progresso' },
-    { id: '4', title: 'Regar flores', date: '04/11', responsible: 'Ana', status: 'para fazer' },
-    { id: '5', title: 'Fazer exames', date: '10/12', responsible: 'Ana', status: 'para fazer' },
+    {
+      id: '1',
+      title: 'Tirar o lixo',
+      date: '01/11',
+      priority: 'Alta',
+      responsible: 'Ana',
+      description: 'Tirar os lixos da casa e separar entre orgânico e reciclável. Tirar antes das 8hrs.',
+      status: 'Para fazer',
+    },
+    {
+      id: '2',
+      title: 'Estudar para a prova',
+      date: '10/11',
+      priority: 'Média',
+      responsible: 'Gabi',
+      description: 'Revisar os capítulos do livro.',
+      status: 'Concluído',
+    },
+    {
+      id: '3',
+      title: 'Fazer o trabalho da faculdade',
+      date: '25/11',
+      priority: 'Alta',
+      responsible: 'Gabi',
+      description: 'Trabalho final sobre gestão de projetos.',
+      status: 'Em progresso',
+    },
+    {
+      id: '4',
+      title: 'Regar flores',
+      date: '04/11',
+      priority: 'Baixa',
+      responsible: 'Ana',
+      description: 'Regar as flores do jardim.',
+      status: 'Para fazer',
+    },
+    {
+      id: '5',
+      title: 'Fazer exames',
+      date: '10/12',
+      priority: 'Alta',
+      responsible: 'Ana',
+      description: 'Realizar exames de rotina.',
+      status: 'Para fazer',
+    },
   ];
 
   return (
     <View style={styles.container}>
-      {/* Contêiner do título e do botão Perfil */}
       <View style={styles.header}>
         <CustomText style={styles.title}>Tarefas</CustomText>
         <OutlinedButton
@@ -28,13 +67,20 @@ const TasksScreen = () => {
       <FlatList
         data={tasks}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <TaskCard task={item} />}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ViewTask', { task: item })}
+          >
+            <TaskCard task={item} />
+          </TouchableOpacity>
+        )}
         contentContainerStyle={styles.listContainer}
+        showsVerticalScrollIndicator={false}
       />
 
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => console.log('Adicionar tarefa')}
+        onPress={() => navigation.navigate('CreateTask')}
       >
         <CustomText style={styles.addButtonText}>adicionar tarefa</CustomText>
       </TouchableOpacity>
@@ -45,15 +91,15 @@ const TasksScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#fff',
+    marginTop: 20
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 20,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   title: {
     fontSize: 24,
@@ -63,9 +109,9 @@ const styles = StyleSheet.create({
   profileButton: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    marginLeft: 10,
   },
   listContainer: {
+    paddingHorizontal: 20,
     paddingBottom: 20,
   },
   addButton: {
@@ -73,7 +119,8 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingVertical: 15,
     alignItems: 'center',
-    marginTop: 20,
+    marginHorizontal: 20,
+    marginBottom: 20,
   },
   addButtonText: {
     color: '#fff',
@@ -83,3 +130,4 @@ const styles = StyleSheet.create({
 });
 
 export default TasksScreen;
+

@@ -37,7 +37,6 @@ const TaskCard = ({ task }) => {
         <CustomText style={styles.statusText}>{status}</CustomText>
       </TouchableOpacity>
 
-      {/* Modal com lista de status */}
       <Modal
         transparent={true}
         visible={isModalVisible}
@@ -68,7 +67,7 @@ const TaskCard = ({ task }) => {
 const getStatusColor = (status) => {
   if (status === 'concluído') return '#4CAF50';
   if (status === 'em progresso') return '#00AFFF';
-  return '#ccc'; // 'para fazer' status
+  return '#ccc';
 };
 
 const styles = StyleSheet.create({
