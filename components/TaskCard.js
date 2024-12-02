@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Modal, FlatList } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import CustomText from './CustomText';
+import TaskStatusModal from './TaskStatusModal';
 
-const TaskCard = ({ task }) => {
-  const [status, setStatus] = useState(task.status);
+const TaskCard = ({ task, setStatus }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const statuses = [
-    { name: 'para fazer', color: '#ccc' },
-    { name: 'em progresso', color: '#00AFFF' },
-    { name: 'concluído', color: '#4CAF50' },
-  ];
-
-  const toggleStatus = () => {
+  const toggleModal = () => {
     setIsModalVisible(true);
   };
 
   const handleStatusChange = (newStatus) => {
-    setStatus(newStatus.name);
+    setStatus(newStatus);
     setIsModalVisible(false);
+  };
+
+  const getStatusColor = (status) => {
+    if (status === 'Concluído') return '#4CAF50';
+    if (status === 'Em progresso') return '#00AFFF';
+    return '#ccc';
   };
 
   return (
@@ -31,43 +31,18 @@ const TaskCard = ({ task }) => {
       </View>
 
       <TouchableOpacity
-        onPress={toggleStatus}
-        style={[styles.statusButton, { backgroundColor: getStatusColor(status) }]}
-      >
-        <CustomText style={styles.statusText}>{status}</CustomText>
+        onPress={toggleModal}
+        style={[styles.statusButton, { backgroundColor: getStatusColor(task.status) }]}>
+        <CustomText style={styles.statusText}>{task.status}</CustomText>
       </TouchableOpacity>
 
-      <Modal
-        transparent={true}
-        visible={isModalVisible}
-        animationType="fade"
-        onRequestClose={() => setIsModalVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
-            <FlatList
-              data={statuses}
-              keyExtractor={(item) => item.name}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={[styles.statusOption, { backgroundColor: item.color }]}
-                  onPress={() => handleStatusChange(item)}
-                >
-                  <CustomText style={styles.statusText}>{item.name}</CustomText>
-                </TouchableOpacity>
-              )}
-            />
-          </View>
-        </View>
-      </Modal>
+      <TaskStatusModal
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        onStatusChange={handleStatusChange}
+      />
     </View>
   );
-};
-
-const getStatusColor = (status) => {
-  if (status === 'concluído') return '#4CAF50';
-  if (status === 'em progresso') return '#00AFFF';
-  return '#ccc';
 };
 
 const styles = StyleSheet.create({
@@ -98,26 +73,6 @@ const styles = StyleSheet.create({
   statusText: {
     color: '#fff',
     fontSize: 12,
-  },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContainer: {
-    width: 200,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 10,
-    alignItems: 'center',
-  },
-  statusOption: {
-    padding: 10,
-    borderRadius: 8,
-    marginBottom: 8,
-    width: '100%',
-    alignItems: 'center',
   },
 });
 

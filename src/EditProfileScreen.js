@@ -45,8 +45,8 @@ const EditProfileScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <FilledButton title="Salvar alterações" onPress={handleSave} />
-        <OutlinedButton title="Cancelar" onPress={handleCancel} />
+        <FilledButton title="Salvar alterações" onPress={() => navigation.navigate('UserProfile')} />
+        <OutlinedButton title="Cancelar" onPress={() => navigation.navigate('UserProfile')} />
       </View>
     </View>
   );

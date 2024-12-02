@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import { View, Modal, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import CustomText from '../components/CustomText';
 import { Ionicons } from '@expo/vector-icons';
+import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
+import TaskStatusModal from '../components/TaskStatusModal';
 
 const ViewTaskScreen = ({ route, navigation }) => {
-  const { task } = route.params;
+  const { task, updateTask } = route.params;
+
+  if (!updateTask) {
+    console.error('updateTask is not passed correctly');
+  }
 
   const [taskStatus, setTaskStatus] = useState(task.status);
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
   const showDeleteModal = () => setDeleteModalVisible(true);
-
   const closeDeleteModal = () => setDeleteModalVisible(false);
 
   const confirmDelete = () => {
@@ -25,12 +30,15 @@ const ViewTaskScreen = ({ route, navigation }) => {
   };
 
   const showModal = () => setModalVisible(true);
-
   const closeModal = () => setModalVisible(false);
 
   const handleStatusChange = (status) => {
     setTaskStatus(status);
-    closeModal();
+    if (updateTask) {
+      updateTask(task.id, status);
+    } else {
+      console.error('updateTask is undefined');
+    }
   };
 
   const getStatusStyle = (status) => {
@@ -88,66 +96,17 @@ const ViewTaskScreen = ({ route, navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <Modal
-        visible={modalVisible}
-        animationType="fade"
-        transparent={true}
-        onRequestClose={closeModal}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
-            <CustomText style={styles.modalTitle}>Selecione o Status</CustomText>
+      <DeleteConfirmationModal
+        isVisible={deleteModalVisible}
+        onCancel={closeDeleteModal}
+        onConfirm={confirmDelete}
+      />
 
-            <TouchableOpacity
-              style={[styles.modalButton, { backgroundColor: '#ccc' }]}
-              onPress={() => handleStatusChange('Para fazer')}
-            >
-              <CustomText style={styles.modalButtonText}>Para fazer</CustomText>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.modalButton, { backgroundColor: '#00AFFF' }]}
-              onPress={() => handleStatusChange('Em progresso')}
-            >
-              <CustomText style={styles.modalButtonText}>Em progresso</CustomText>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.modalButton, { backgroundColor: '#4CAF50' }]}
-              onPress={() => handleStatusChange('Concluído')}
-            >
-              <CustomText style={styles.modalButtonText}>Concluído</CustomText>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-
-      <Modal
-        visible={deleteModalVisible}
-        animationType="fade"
-        transparent={true}
-        onRequestClose={closeDeleteModal}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
-            <CustomText style={styles.modalTitle}>Confirmar Exclusão?</CustomText>
-
-            <TouchableOpacity
-              style={[styles.modalButton, { backgroundColor: '#ccc' }]}
-              onPress={closeDeleteModal}
-            >
-              <CustomText style={styles.modalButtonText}>Cancelar</CustomText>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.modalButton, { backgroundColor: '#FF0000' }]}
-              onPress={confirmDelete}
-            >
-              <CustomText style={styles.modalButtonText}>Confirmar</CustomText>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+      <TaskStatusModal
+        isVisible={modalVisible}
+        onClose={closeModal}
+        onStatusChange={handleStatusChange}
+      />
     </View>
   );
 };
@@ -157,24 +116,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
-    marginTop: 20
+    marginTop: 20,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#00AFFF',
-  },
-  closeButton: {
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-  },
-  closeButtonText: {
-    fontSize: 18,
     fontWeight: 'bold',
     color: '#00AFFF',
   },
@@ -237,36 +187,6 @@ const styles = StyleSheet.create({
   },
   deleteButtonText: {
     color: '#fff',
-  },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContainer: {
-    backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 10,
-    width: '80%',
-    alignItems: 'center',
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  modalButton: {
-    width: '100%',
-    paddingVertical: 12,
-    marginBottom: 10,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  modalButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 });
 

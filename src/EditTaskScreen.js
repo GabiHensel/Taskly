@@ -121,7 +121,7 @@ const EditTaskScreen = ({ route, navigation }) => {
         />
         <OutlinedButton
           title="Cancelar"
-          onPress={() => navigation.navigate('ViewTask', { task: task })}
+          onPress={() => navigation.navigate('Tasks')}
         />
       </View>
     </View>

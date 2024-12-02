@@ -2,26 +2,23 @@ import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import CustomText from '../components/CustomText';
 import { Ionicons } from '@expo/vector-icons';
+import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 
 const UserProfileScreen = ({ navigation }) => {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
-  // Abrir modal de exclusão
   const showDeleteModal = () => setDeleteModalVisible(true);
 
-  // Fechar modal de exclusão
   const closeDeleteModal = () => setDeleteModalVisible(false);
 
-  // Confirmar exclusão do perfil
   const confirmDelete = () => {
     console.log('Perfil excluído com sucesso!');
     closeDeleteModal();
-    navigation.navigate('Login'); // Redireciona para a tela de login após a exclusão
+    navigation.navigate('Login');
   };
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <CustomText style={styles.title}>Usuário</CustomText>
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -29,11 +26,9 @@ const UserProfileScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      {/* Dados do usuário */}
       <CustomText style={styles.username}>Gabi</CustomText>
       <CustomText style={styles.email}>gabriela@email.com</CustomText>
 
-      {/* Botão de Logout */}
       <TouchableOpacity
         style={[styles.logoutButton]}
         onPress={() => navigation.navigate('Login')}
@@ -41,10 +36,8 @@ const UserProfileScreen = ({ navigation }) => {
         <CustomText style={styles.logoutButtonText}>Sair</CustomText>
       </TouchableOpacity>
 
-      {/* Espaço para preencher a tela acima dos botões */}
       <View style={styles.content}></View>
 
-      {/* Botões de ação: Editar e Excluir */}
       <View style={styles.actionButtons}>
         <TouchableOpacity
           style={[styles.button, styles.editButton]}
@@ -61,28 +54,11 @@ const UserProfileScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      {/* Modal de confirmação de exclusão */}
-      {deleteModalVisible && (
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
-            <CustomText style={styles.modalTitle}>Confirmar Exclusão?</CustomText>
-
-            <TouchableOpacity
-              style={[styles.modalButton, { backgroundColor: '#ccc' }]}
-              onPress={closeDeleteModal} // Botão cancelar
-            >
-              <CustomText style={styles.modalButtonText}>Cancelar</CustomText>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.modalButton, { backgroundColor: '#FF0000' }]}
-              onPress={confirmDelete} // Botão confirmar exclusão
-            >
-              <CustomText style={styles.modalButtonText}>Confirmar</CustomText>
-            </TouchableOpacity>
-          </View>
-        </View>
-      )}
+      <DeleteConfirmationModal
+        isVisible={deleteModalVisible}
+        onCancel={closeDeleteModal}
+        onConfirm={confirmDelete}
+      />
     </View>
   );
 };
@@ -105,10 +81,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#00AFFF',
-  },
-  profileButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
   },
   username: {
     fontSize: 20,
@@ -138,7 +110,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   content: {
-    flex: 1, // Preenche o espaço restante para empurrar os botões para baixo
+    flex: 1,
   },
   actionButtons: {
     flexDirection: 'row',
@@ -146,7 +118,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 20,
     marginTop: 20,
-    marginBottom: 20, // Para garantir que o espaçamento inferior fique adequado
+    marginBottom: 20,
   },
   button: {
     width: '40%',
@@ -168,40 +140,6 @@ const styles = StyleSheet.create({
   },
   deleteButtonText: {
     color: '#fff',
-  },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-  },
-  modalContainer: {
-    backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 10,
-    width: '80%',
-    alignItems: 'center',
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  modalButton: {
-    width: '100%',
-    paddingVertical: 12,
-    marginBottom: 10,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  modalButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 });
 

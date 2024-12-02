@@ -1,7 +1,5 @@
-// DeleteConfirmationModal.js
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 const DeleteConfirmationModal = ({ isVisible, onCancel, onConfirm }) => {
   return (
@@ -15,11 +13,11 @@ const DeleteConfirmationModal = ({ isVisible, onCancel, onConfirm }) => {
         <View style={styles.modal}>
           <Text style={styles.modalTitle}>Confirmar Exclusão?</Text>
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity style={styles.button} onPress={onCancel}>
-              <Text style={styles.buttonText}>Cancelar</Text>
+            <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={onCancel}>
+              <Text style={[styles.buttonText, styles.cancelButtonText]}>Cancelar</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={onConfirm}>
-              <Text style={styles.buttonText}>Confirmar</Text>
+            <TouchableOpacity style={[styles.button, styles.deleteButton]} onPress={onConfirm}>
+              <Text style={[styles.buttonText, styles.deleteButtonText]}>Excluir</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -36,34 +34,52 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modal: {
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     padding: 20,
     borderRadius: 10,
-    width: '80%',
+    width: '85%',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#00AFFF',
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#333',
     marginBottom: 20,
+    textAlign: 'center',
   },
   buttonsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     width: '100%',
   },
   button: {
     flex: 1,
-    paddingVertical: 12,
-    backgroundColor: '#00AFFF',
+    height: 40,
     marginHorizontal: 5,
-    borderRadius: 10,
+    justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  cancelButton: {
+    borderColor: '#00AFFF',
+    backgroundColor: '#fff',
+  },
+  deleteButton: {
+    borderColor: '#FF0000',
+    backgroundColor: '#fff',
   },
   buttonText: {
-    color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  cancelButtonText: {
+    color: '#00AFFF',
+  },
+  deleteButtonText: {
+    color: '#FF0000',
   },
 });
 

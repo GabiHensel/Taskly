@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import CustomText from '../components/CustomText';
 import TaskCard from '../components/TaskCard';
-import OutlinedButton from '../components/OutlinedButton';
-import { FontAwesome } from '@expo/vector-icons'; // Importa o ícone
+import { FontAwesome } from '@expo/vector-icons';
 
 const TasksScreen = ({ navigation }) => {
-  const tasks = [
+  const [tasks, setTasks] = useState([
     {
       id: '1',
       title: 'Tirar o lixo',
@@ -52,7 +51,14 @@ const TasksScreen = ({ navigation }) => {
       description: 'Realizar exames de rotina.',
       status: 'Para fazer',
     },
-  ];
+  ]);
+
+  const handleStatusChange = (taskId, newStatus) => {
+    const updatedTasks = tasks.map(task =>
+      task.id === taskId ? { ...task, status: newStatus } : task
+    );
+    setTasks(updatedTasks);
+  };
 
   return (
     <View style={styles.container}>
@@ -62,7 +68,7 @@ const TasksScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('UserProfile')}
           style={styles.profileButton}
         >
-        <FontAwesome name="user" size={24} color="#00AFFF" />
+          <FontAwesome name="user" size={24} color="#00AFFF" />
         </TouchableOpacity>
       </View>
 
@@ -71,9 +77,9 @@ const TasksScreen = ({ navigation }) => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate('ViewTask', { task: item })}
+            onPress={() => navigation.navigate('ViewTask', { task: item, updateTask: handleStatusChange })}
           >
-            <TaskCard task={item} />
+            <TaskCard task={item} setStatus={(newStatus) => handleStatusChange(item.id, newStatus)} />
           </TouchableOpacity>
         )}
         contentContainerStyle={styles.listContainer}
@@ -84,7 +90,7 @@ const TasksScreen = ({ navigation }) => {
         style={styles.addButton}
         onPress={() => navigation.navigate('CreateTask')}
       >
-        <CustomText style={styles.addButtonText}>adicionar tarefa</CustomText>
+        <CustomText style={styles.addButtonText}>Adicionar Tarefa</CustomText>
       </TouchableOpacity>
     </View>
   );
